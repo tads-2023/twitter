@@ -15,8 +15,11 @@ userRouter.post("/sign-up", async (req, res) => {
   } = req.body;
   password = Base64.stringify(sha256(password));
   let user = await User.create({nome, apelido, email, password});
-  user.password = "";
-  res.send(user);
+  const token = jwt.sign({
+    email: user.email, 
+    id: user._id
+  }, secret);
+  res.send({token: token});
 });
 
 userRouter.post("/sign-in", async (req, res) => {
