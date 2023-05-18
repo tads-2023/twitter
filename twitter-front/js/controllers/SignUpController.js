@@ -18,7 +18,7 @@ class SignUpController {
         let email = document.querySelector("#email").value;
 
         let bodyData = {
-            nome,
+            nome:,
             apelido,
             password,
             email
@@ -32,5 +32,6 @@ class SignUpController {
         console.log("resposta", resposta2);
 
         sessionStorage.setItem("token", resposta2.token);
+        new HomeController();
     }
 }

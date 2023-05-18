@@ -17,7 +17,9 @@ router.post("", async (req, res) => {
 });
 
 router.get("", async (req, res) => {
-    console.log("req", req.params.id);
+    if(req.params.id == "me") {
+        req.params.id = req.userLogado._id;
+    }
     const posts = await Post.find({
         userId: req.params.id
     });
