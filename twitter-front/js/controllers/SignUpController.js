@@ -1,5 +1,6 @@
 class SignUpController {
     constructor() {
+
         let view = new SignUpView().template();
         document.querySelector("#mainContainer").innerHTML = view;
 
@@ -18,7 +19,7 @@ class SignUpController {
         let email = document.querySelector("#email").value;
 
         let bodyData = {
-            nome:,
+            nome,
             apelido,
             password,
             email
@@ -32,6 +33,6 @@ class SignUpController {
         console.log("resposta", resposta2);
 
         sessionStorage.setItem("token", resposta2.token);
-        new HomeController();
+        new Router().irParaHome();
     }
 }

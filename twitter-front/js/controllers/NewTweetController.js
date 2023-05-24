@@ -20,7 +20,7 @@ class NewTweetController {
                 "token": sessionStorage.getItem("token")
             }
         }).then(() => {
-            new HomeController();
+            new Router().irParaHome();
         })
     }
 }

@@ -1,30 +1,29 @@
 const express = require("express");
 const Post = require("../models/Post");
-const User = require("../models/User");
-const mongoose = require("mongoose");
+const Following = require("../models/Following");
+const authMiddleWare = require("../middlewares/auth.middleware");
 
-const router = express.Router({mergeParams: true});
+const postRouter = express.Router();
 
-router.post("", async (req, res) => {
-    const { conteudo } = req.body;
-    const post = await Post.create({
-        conteudo: conteudo,
-        curtidas: 0,
-        userId: req.userLogado._id
+postRouter.get("", authMiddleWare, async (req, res) => {
+    const posts = await Post.find({});
+    let followedIds = await Following.find({
+        followerId: req.userLogado._id
+    })
+    followedIds = followedIds.map((e) => {
+        return e.followedId.toString();
     });
 
-    res.send(post);
-});
-
-router.get("", async (req, res) => {
-    if(req.params.id == "me") {
-        req.params.id = req.userLogado._id;
-    }
-    const posts = await Post.find({
-        userId: req.params.id
+    const postsParced = posts.map((post) => {
+        return {
+            conteudo: post.conteudo,
+            userId: post.userId,
+            _id: post._id,
+            following: followedIds.includes(post.userId.toString()) 
+        }
     });
 
-    res.send(posts);
-});
+    res.send(postsParced);
+})
 
-module.exports = router;
+module.exports = postRouter;
