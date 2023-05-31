@@ -11,12 +11,16 @@ class NewTweetController {
 
     cadastrarTweet() {
         let conteudo = this.container.querySelector("#conteudo").value;
+        let imagem = this.container.querySelector("#imagem").files[0];
+        
+        const body = new FormData()
+        body.append('imagem', imagem)
+        body.append('conteudo', conteudo);
 
         fetch("http://localhost:3000/users/me/posts", {
             method: "POST",
-            body: JSON.stringify({conteudo}),
+            body: body,
             headers: {
-                "Content-Type": "application/json",
                 "token": sessionStorage.getItem("token")
             }
         }).then(() => {

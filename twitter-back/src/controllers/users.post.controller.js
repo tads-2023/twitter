@@ -1,14 +1,17 @@
 const express = require("express");
 const Post = require("../models/Post");
-const User = require("../models/User");
-const mongoose = require("mongoose");
+const multer  = require('multer');
+
+
+const upload = multer({ dest: 'imagens/' })
 
 const router = express.Router({mergeParams: true});
 
-router.post("", async (req, res) => {
+router.post("", upload.single('imagem'), async (req, res) => {
     const { conteudo } = req.body;
     const post = await Post.create({
         conteudo: conteudo,
+        caminhoImagem: `http://localhost:3000/${req.file.path}`,
         curtidas: 0,
         userId: req.userLogado._id
     });

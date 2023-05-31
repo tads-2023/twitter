@@ -14,6 +14,9 @@ const setup = async () => {
         await mongoose.connect(`${mongod.getUri()}twitter`);
 
         const app = express();
+
+        app.use(express.static('.'))
+
         app.use(express.json());
 
         app.use(cors());

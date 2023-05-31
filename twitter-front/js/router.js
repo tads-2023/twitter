@@ -19,7 +19,6 @@ class Router {
         this.irPara(this.rotas.criarTweet)
     }
     irPara(rota) {
-        history.pushState({}, "", rota.path);
         eval(`new ${rota.controller}();`)
     }   
 

@@ -19,6 +19,7 @@ postRouter.get("", authMiddleWare, async (req, res) => {
             conteudo: post.conteudo,
             userId: post.userId,
             _id: post._id,
+            caminhoImagem: post.caminhoImagem,
             following: followedIds.includes(post.userId.toString()) 
         }
     });
